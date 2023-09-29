@@ -1,6 +1,18 @@
 /* jshint esversion: 6 */
 
+/* REDO: 4,  */
+
+
 // Solve the following prompts using recursion.
+
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 
 // 1. Calculate the factorial of a number. The factorial of a non-negative integer n,
 // denoted by n!, is the product of all positive integers less than or equal to n.
@@ -16,39 +28,116 @@ let factorial = function(n) {
   } else if (n <= 1) {
     return 1;
   }
-
   /* RECURSIVE CASE */
-  result *= factorial(n-1);
-
-  // Return result
-  return result;
+  return result *= factorial(n-1);
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 let sum = function(array) {
+  // Declare result num
+  var result = 0;
+  /* BASE CASE */
+  if (!Array.isArray(array)) {
+    return array;
+  }
+
+  /* RECURSIVE CASE */
+  array.forEach(function(num) {
+    result += sum(num);
+  });
+
+  // Return result
+  return result;
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 let arraySum = function(array) {
+  // Declare result num
+  var result = 0;
+  /* BASE CASE */
+  if (!Array.isArray(array)) {
+    return array;
+  }
+  /* RECURSIVE CASE */
+  array.forEach(function(element) {
+    result += arraySum(element);
+  });
+
+  // Return result
+  return result;
 };
+
 
 // 4. Check if a number is even.
 // isEven(2) // true
 // isEven(9) // false
 let isEven = function(n) {
+  if(n < 0) {
+    n = Math.abs(n);
+  }
+  if (n === 0) {
+    return true;
+  } else if (n === 1) {
+    return false;
+  } else {
+    return isEven(n-2);
+  }
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 let sumBelow = function(n) {
+  // Declare result num
+  var result = 0;
+  var isNeg = false;
+  if (n < 0) {
+    isNeg = true;
+    n = -n;
+  }
+  /* BASE CASE */
+  if (n === 0) {
+    return 0;
+  } else {
+    result = n-1 + sumBelow(n-1);
+  }
+  /* RECURSIVE CASE */
+  if(isNeg) {
+    return -result;
+  } else {
+    return result;
+  }
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 let range = function(x, y) {
+  // Declare result array
+  var results = [];
+  // Handle edge case x === y and y-x or x-y is 1
+  if (Math.abs(y - x) <= 1) {
+    return results
+  }
+
+  /* HANDLE ASC */
+  if (x < y) {
+    if (x+1 === y-1) {
+      /* BASE CASE */
+      return x+1;
+    }
+    /* RECURSIVE CASE */
+    return results.concat(x+1, range(x+1,y));
+  /* HANDLE DESC */
+  } else {
+    if (x-1 === y-1) {
+      /* BASE CASE */
+      return x-1;
+    }
+    /* RECURSIVE CASE */
+    return results.concat(x-1, range(x-1,y));
+  }
 };
 
 // 7. Compute the exponent of a number.
@@ -57,6 +146,14 @@ let range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 let exponent = function(base, exp) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 8. Determine if a number is a power of two.
@@ -64,11 +161,27 @@ let exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 let powerOfTwo = function(n) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 9. Write a function that reverses a string.
 // reverse("hello"); // olleh
 let reverse = function(string) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 10. Write a function that determines if a string is a palindrome.
@@ -76,6 +189,14 @@ let reverse = function(string) {
 // palindrome("rotor") // true
 // palindrome("wow") // true
 let palindrome = function(string) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -84,16 +205,40 @@ let palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 let modulo = function(x, y) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
 let multiply = function(x, y) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
 let divide = function(x, y) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
@@ -102,6 +247,14 @@ let divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 let gcd = function(x, y) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -109,21 +262,53 @@ let gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 let compareStr = function(str1, str2) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 let createArray = function(str) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 17. Reverse the order of an array
 let reverseArr = function(array) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 let buildList = function(value, length) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
@@ -132,17 +317,41 @@ let buildList = function(value, length) {
 // For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number.
 // fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
 let fizzBuzz = function(n) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 20. Count the occurrence of a value in a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 let countOccurrence = function(array, value) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 21. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 let rMap = function(array, callback) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
@@ -150,6 +359,14 @@ let rMap = function(array, callback) {
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 let countKeysInObj = function(obj, key) {
+  // Declare result num
+
+  /* BASE CASE */
+
+  /* RECURSIVE CASE */
+
+
+  // Return result
 };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
