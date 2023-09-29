@@ -7,6 +7,21 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 let factorial = function(n) {
+  // Declare results num
+  var result = n;
+
+  /* BASE CASE */
+  if (n < 0) {
+    return null;
+  } else if (n <= 1) {
+    return 1;
+  }
+
+  /* RECURSIVE CASE */
+  result *= factorial(n-1);
+
+  // Return result
+  return result;
 };
 
 // 2. Compute the sum of an array of integers.
@@ -52,7 +67,7 @@ let powerOfTwo = function(n) {
 };
 
 // 9. Write a function that reverses a string.
-// reverse("hello"); // olleh 
+// reverse("hello"); // olleh
 let reverse = function(string) {
 };
 
