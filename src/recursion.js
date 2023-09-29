@@ -123,16 +123,16 @@ let range = function(x, y) {
 
   /* HANDLE ASC */
   if (x < y) {
+    /* BASE CASE */
     if (x+1 === y-1) {
-      /* BASE CASE */
       return x+1;
     }
     /* RECURSIVE CASE */
     return results.concat(x+1, range(x+1,y));
   /* HANDLE DESC */
   } else {
+    /* BASE CASE */
     if (x-1 === y-1) {
-      /* BASE CASE */
       return x-1;
     }
     /* RECURSIVE CASE */
@@ -146,14 +146,37 @@ let range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 let exponent = function(base, exp) {
+  // I: base and exponent (nums)
+  // O: base ^ exponent (num)
+  // C: recursion
+  // E:
+  //   exp = 0 -> result = 1
+  //   base = 0 -> results = 0
+  //   negative base -> should be handled by solution
+  //   negative exponents -> 1 /(base ^ exp)
+
   // Declare result num
+  var result = 1;
+  // Handle negative case
+  var negExp = exp < 0 ? true : false;
+  exp = exp < 0 ? -exp : exp;
 
+  /* EDGE CASE: 0 */
+  if (base === 0) {
+    return 0;
+  }
+  if (exp === 0) {
+    return 1;
+  }
   /* BASE CASE */
-
+  if(exp === 1) {
+    return base;
+  }
   /* RECURSIVE CASE */
+  result = base * exponent(base, exp - 1);
 
-
-  // Return result
+  // Return result and handle neg exponent
+  return result = negExp ? (1 / result) : result;
 };
 
 // 8. Determine if a number is a power of two.
@@ -161,27 +184,49 @@ let exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 let powerOfTwo = function(n) {
-  // Declare result num
+  // I: number
+  // O: bool
+  // C: recursion
+  // E:
+  //   0 -> false
+  //   negative int -> false
+  //   fractions -> 1/(x^2)
 
+  /* EDGE CASE */
+  if(n <= 0) {
+    return false;
+  }
+  // Handle fractions
+  n = 0 < n < 1 ? (1 / n) : n;
   /* BASE CASE */
-
+  if (n === 1) {
+    return true;
+  }
   /* RECURSIVE CASE */
-
-
-  // Return result
+  return powerOfTwo(n/2);
 };
 
 // 9. Write a function that reverses a string.
 // reverse("hello"); // olleh
 let reverse = function(string) {
-  // Declare result num
+  // I: string
+  // O: reverse of string
+  // C: recursion
+  // E: empty, string length 1
 
+  // Declare result string
+  var result = '';
+  // handle edge case
+  if (string.length === 0) {
+    return result;
+  }
   /* BASE CASE */
-
+  var currentIndex = string.length-1;
+  if(currentIndex === 0) {
+    return string[currentIndex];
+  }
   /* RECURSIVE CASE */
-
-
-  // Return result
+  return result = string[currentIndex] + reverse(string.slice(0, -1)); // end index for .slice() is not inclusive
 };
 
 // 10. Write a function that determines if a string is a palindrome.
@@ -189,14 +234,27 @@ let reverse = function(string) {
 // palindrome("rotor") // true
 // palindrome("wow") // true
 let palindrome = function(string) {
-  // Declare result num
+  // I: string
+  // O: bool
+  // C: recursion
+  // E: capitalized letters, empty, string length 1
 
-  /* BASE CASE */
+  // Even chars: string[i] === string[string.length -1 -i]
+    // abba -> string[1] === string[4 - 1 - 1]
+  // Odd chars: string[i] === string[string.length -1 -i]
+    // aba -> string[1] === string[2 - 1]
+  var lowercaseString = string.toLowerCase();
 
-  /* RECURSIVE CASE */
-
-
-  // Return result
+  var leftIndex = 0
+  var rightIndex = string.length - 1;
+  // Base Case
+    // rightIndex - leftIndex <= 1
+  if (rightIndex - leftIndex <= 1) {
+    return lowercaseString[leftIndex] === lowercaseString[rightIndex];
+  }
+  // Recursive
+    // return if both current pair and next pair true
+  return (lowercaseString[leftIndex] === lowercaseString[rightIndex] && palindrome(string.slice(1,-1)));
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
