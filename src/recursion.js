@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 
-/* REDO: 4,  */
+/* REDO: 4, 11, 15 */
 
 
 // Solve the following prompts using recursion.
@@ -262,41 +262,144 @@ let palindrome = function(string) {
 // modulo(5,2) // 1
 // modulo(17,5) // 2
 // modulo(22,6) // 4
-let modulo = function(x, y) {
-  // Declare result num
+  // I: nums
+  // O: num - remainder of x/y
+  // C: recursion, can't use modulo
+  // E:
+    // y < x -> return x
 
-  /* BASE CASE */
+  // CASE 1: x is neg, y is pos
+    // add y till x between 0 and y
+  // CASE 4: x is pos, y is pos
+    // subact y till x between 0 and y
 
-  /* RECURSIVE CASE */
+  // CASE 2: x is pos, y is neg
+    // add y till x between y and 0
+  // CASE 3: x and y are neg
+    // subtract y till x between y and 0
 
+  /* Solution 1 */
+  // var modulo = function(x, y) {
+  //   if(y === 0) {
+  //     return NaN;
+  //   }
+  //   if (y > 0) {
+  //     if(-y < x && x < y) {
+  //       return x;
+  //     }
+  //     if(x > 0) {
+  //       return modulo(x-y,y);
+  //     }
+  //     if(x < 0) {
+  //       return modulo(x+y,y);
+  //     }
+  //   }
+  //   if (y < 0) {
+  //     if (y < x && x < -y) {
+  //       return x;
+  //     }
+  //     if(x < 0) {
+  //       return modulo(x-y,y);
+  //     }
+  //     if(x > 0) {
+  //         return modulo(x+y,y);
+  //     }
+  //   }
+  // };
 
-  // Return result
-};
+  /* Solution 2 */
+  var modulo = function(x, y) {
+    if(y === 0) {
+      return NaN;
+    }
+    if ((y > 0 && -y < x && x < y) || (y < 0 && y < x && x < -y)) {
+      return x;
+    }
+    if ((y > 0 && x > 0) || (y < 0 && x < 0)) {
+      return modulo(x-y,y);
+    }
+    if ((y > 0 && x < 0) || (y < 0 && x > 0)) {
+      return modulo(x+y,y);
+    }
+  };
+
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
+  // I: 2 nums
+  // O: 1 num (product)
+  // C: recursion, no * operator, no Math methods
+  // E:
+    // x or y is 0
+    // x or y is neg
+
+  // Basic strat: add x to x, y times
+
 let multiply = function(x, y) {
-  // Declare result num
-
-  /* BASE CASE */
-
-  /* RECURSIVE CASE */
-
-
-  // Return result
+  if (x === 0 || y === 0) {
+    return 0;
+  }
+  var result = 0;
+  if(x < 0 && y < 0) {
+    x = -x;
+    y = -y;
+  }
+  if(x > 0 && y < 0) {
+    x = -x;
+    y = -y;
+  }
+  if (y === 1) {
+    return x;
+  }
+  return x + multiply(x, y-1);
 };
 
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
+// I: 2 nums
+// O: quotient (num)
+// C: recursion, no / operator or Math methods
+// E:
+  // x is 0 -> ; y is 0 -> undefined
+  // negatives
+    // x = -16, y is 3 -> -5
+      // Base case: x between -y, 0
+    // x = 15, y = -3 -> -5
+      // Base case: x between 0, -y
+    // x and y are neg -> turn both pos
+
+  // recursive case:
+    // 1 + (divide(x-y, y))
+
 let divide = function(x, y) {
-  // Declare result num
+  if (y === 0) {
+    return NaN;
+  }
+  if (x === 0) {
+    return 0;
+  }
 
-  /* BASE CASE */
+  if(x < 0 && y < 0) {
+    x = -x;
+    y = -y;
+  }
 
-  /* RECURSIVE CASE */
-
-
-  // Return result
+  if(x < 0 && y > 0) {
+    if(-y < x && x < 0) {
+      return 0;
+    }
+    return 1 + divide(x + y, y);
+  } else if (x > 0 && y < 0) {
+    if (0 < x && x < -y) {
+      return 0;
+    }
+    return 1 + divide(x + y, y);
+  } else if(x > 0 && y > 0) {
+    if (0 < x && x < y) {
+      return 0;
+    }
+    return 1 + divide(x - y, y)
+  }
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
@@ -304,69 +407,107 @@ let divide = function(x, y) {
 // gcd(4,36); // 4
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
+
+// check if larger num is dividiable by small
+
 let gcd = function(x, y) {
-  // Declare result num
+  // EDGE CASE
+  if(x < 0 || y < 0) {
+    return null;
+  }
+  if(x === 0) {
+    return y;
+  }
+  if (y === 0) {
+    return x;
+  }
+  if (y === x) {
+    return y;
+  }
 
-  /* BASE CASE */
+  // Recursive
+  if (y > x) {
+    var temp = y;
+    y = x;
+    x = temp;
+  }
 
-  /* RECURSIVE CASE */
-
-
-  // Return result
+  return gcd(y, x%y);
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
 // both are identical.
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
-let compareStr = function(str1, str2) {
-  // Declare result num
 
+// I: 2 strings
+// O: bool
+// C: recursion
+// E: empty string(s)
+let compareStr = function(str1, str2) {
   /* BASE CASE */
+  if (str1.length === 0 && str2.length === 0) {
+    return str1[0] === str2[0];
+  }
 
   /* RECURSIVE CASE */
-
-
-  // Return result
+  return (str1[0] === str2[0]) && compareStr(str1.slice(1), str2.slice(1));
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
+// I: string
+// O: array -> each letter is an index of array
+// C: use recursion,
+// E: spaces -> ''
+  // empty array = [];
 let createArray = function(str) {
   // Declare result num
-
+  var result = [];
   /* BASE CASE */
-
+  if (str.length === 1) {
+    return result.concat(str[0]);
+  }
   /* RECURSIVE CASE */
-
-
-  // Return result
+  return result.concat(str[0], createArray(str.slice(1)));
 };
 
 // 17. Reverse the order of an array
+// I: Array
+// O: array
+// C: recursion
+// E: empty array
 let reverseArr = function(array) {
   // Declare result num
-
+  var result = [];
   /* BASE CASE */
-
+  if(array.length === 1) {
+    return result.concat(array[0]);
+  }
   /* RECURSIVE CASE */
-
-
-  // Return result
+  return result.concat(array[array.length-1], reverseArr(array.slice(0, -1)));
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
+// I: 2 nums
+// O: array
+// C: recursion
+// E: length = 0, value {}, []
+//
 let buildList = function(value, length) {
   // Declare result num
+  var result = [];
+  if (length === 0) {
+    return result;
+  }
+  if (length === 1) {
+    return [value];
+  }
+  return result.concat([buildList(value, length-1)]);
 
-  /* BASE CASE */
 
-  /* RECURSIVE CASE */
-
-
-  // Return result
 };
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
